@@ -12,13 +12,14 @@ class PostsRepository {
 
     if (response.data is List) {
       for (var item in response.data) {
-        posts.add(Post(userId: item['userId'], id: item['id'], title: item['title'], body: item['body']));
+        posts.add(Post.fromJson(item));
       }
     }
   }
 }
 
 PostsRepository postsRepository = PostsRepository();
+
 class Post {
   final int userId;
   final int id;
@@ -30,5 +31,15 @@ class Post {
     required this.title,
     required this.body,
   });
+
+  factory Post.fromJson(Map map) {
+    return Post(
+      userId: map['userId'],
+      id: map['id'],
+      title: map['title'],
+      body: map['body'],
+    );
+  }
 }
+
 // List <Map<String,dynamic>>
